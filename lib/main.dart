@@ -10,12 +10,13 @@ import 'package:go_router/go_router.dart';
 import 'data/entity/post.dart';
 
 void main() {
-  runApp(MainApp());
+  WidgetsFlutterBinding.ensureInitialized();
+  runApp(MainApp()); 
 }
 
 class MainApp extends StatelessWidget {
   MainApp({super.key});
-
+  //Using DI for repository
   final repository = Repository();
 
   //Go gouter Config

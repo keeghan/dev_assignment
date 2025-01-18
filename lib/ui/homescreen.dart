@@ -38,25 +38,35 @@ class HomeScreen extends StatelessWidget {
               );
 
             case PostStatus.failure:
-              return Column(
-                children: [
-                  Text('Failed to load posts: ${state.exception.toString()}'),
-                  ElevatedButton(
-                    onPressed: () {
-                      context.read<PostBloc>().add(FetchPostsEvent());
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.red,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Failed to load posts: ${state.exception.toString()}',
+                      textAlign: TextAlign.center,
+                    ),
+                    SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        //add Reload event
+                        context.read<PostBloc>().add(FetchPostsEvent());
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.red,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'retry',
-                      style: const TextStyle(color: Colors.white),
-                    ),
-                  )
-                ],
+                      child: Text(
+                        'retry',
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
               );
 
             //Defalut == State.initial
