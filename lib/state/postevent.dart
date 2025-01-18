@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-//Events to b e sent to PostBloc to update State
+//Events to be sent to PostBloc to trigger State update
 abstract class PostEvent extends Equatable {
   const PostEvent();
 
@@ -8,5 +8,11 @@ abstract class PostEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class FetchPostsEvent  extends PostEvent{}
-class RefreshPostsEvent extends PostEvent{}
+class FetchPostsEvent extends PostEvent {}
+
+class RefreshPostsEvent extends PostEvent {}
+
+class SearchPostsEvent extends PostEvent {
+  final String query;
+  const SearchPostsEvent(this.query);
+}

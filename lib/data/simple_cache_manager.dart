@@ -1,12 +1,11 @@
 import 'package:shared_preferences/shared_preferences.dart';
 
 //Cache Manager: uses sharedPreferences to cache string data
-//mainly (posts) 
+//mainly (posts)
 class CacheManager {
   final SharedPreferences _prefs;
   static const String _timestampKeySuffix = '_timestamp';
-  //make cache duration one day (consideration for making it variable)
-  static const Duration _expirationDuration = Duration(days: 1);
+  static const String _durationKeySuffix = '_duration';
 
   CacheManager(this._prefs);
 
@@ -15,13 +14,18 @@ class CacheManager {
     return CacheManager(prefs);
   }
 
-  Future<bool> saveData(String key, String data) async {
+  Future<bool> saveData(String key, String data, Duration expirationDuration) async {
     try {
       await _prefs.setString(key, data);
       //save time to denote when this data was cached
       await _prefs.setInt(
         key + _timestampKeySuffix,
         DateTime.now().millisecondsSinceEpoch,
+      );
+      //save the duration for the data
+      await _prefs.setInt(
+        key + _durationKeySuffix,
+        expirationDuration.inMilliseconds,
       );
       return true;
     } catch (e) {
@@ -43,34 +47,39 @@ class CacheManager {
     final data = _prefs.getString(key);
     if (data == null) return false;
 
-    // Check if timestamp exists
+    // Check if timestamp and duration exists
     final timestamp = _prefs.getInt(key + _timestampKeySuffix);
-    if (timestamp == null) return false;
+    final duration = _prefs.getInt(key + _durationKeySuffix);
+    if (timestamp == null || duration == null) return false;
 
-    //check cache is still valid or has expired
+    //check cache is still valid by comparing
+    //savedDate - currentDate to expirationDuration
     final savedDate = DateTime.fromMillisecondsSinceEpoch(timestamp);
     final currentDate = DateTime.now();
     final difference = currentDate.difference(savedDate);
+    final expirationDuration = Duration(milliseconds: duration);
 
-    return difference <= _expirationDuration;
+    return difference <= expirationDuration;
   }
 
-  //Refresh cache 
-  Future<bool> refreshData(String key, Future<String> Function() fetchNewData) async {
+  //Refresh cache
+  Future<bool> refreshData(
+      String key, Future<String> Function() fetchNewData, Duration expirationDuration) async {
     try {
       final newData = await fetchNewData();
-      return await saveData(key, newData);
+      return await saveData(key, newData, expirationDuration);
     } catch (e) {
       print('Error refreshing cached data: $e');
       return false;
     }
   }
 
-    //clear the cache
+  //clear the cache
   Future<bool> clearCache(String key) async {
     try {
       await _prefs.remove(key);
       await _prefs.remove(key + _timestampKeySuffix);
+      await _prefs.remove(key + _durationKeySuffix);
       return true;
     } catch (e) {
       print('Error clearing cached data: $e');

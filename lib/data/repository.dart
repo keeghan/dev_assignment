@@ -38,7 +38,7 @@ class Repository {
       );
 
       if (response.statusCode == 200) {
-        await _cacheManager.saveData(POSTS_CACHE_KEY, response.body);
+        await _cacheManager.saveData(POSTS_CACHE_KEY, response.body,Duration(days: 1));
         onSuccess(response.body);
       } else {
         //onFailure setState
@@ -72,7 +72,6 @@ class Repository {
 
 
 //Manually referesh post
-
 // Future<void> refreshPosts() async {
 //     _state = PostState(status: PostStatus.loading);
 

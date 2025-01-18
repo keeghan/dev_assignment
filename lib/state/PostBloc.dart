@@ -3,12 +3,29 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'postevent.dart';
 import 'poststate.dart';
 
+//Block to handle state of posts
 class PostBloc extends Bloc<PostEvent, PostState> {
   final Repository repository;
 
   PostBloc({required this.repository}) : super(PostState()) {
     on<FetchPostsEvent>(_onFetchPosts);
     on<RefreshPostsEvent>(_onRefreshPosts);
+    on<SearchPostsEvent>(_onSearchPosts);
+  }
+
+  //search event to trigger new state emission
+  void _onSearchPosts(
+    SearchPostsEvent event,
+    Emitter<PostState> emit,
+  ) {
+    if (state.status == PostStatus.failure) return;
+    //emit copy of current state with new SearchPostEvent query
+    emit(PostState(
+      status: state.status,
+      searchQuery: event.query,
+      exception: state.exception,
+      posts: state.posts,
+    ));
   }
 
   Future<void> _onFetchPosts(

@@ -1,5 +1,5 @@
 import 'package:dev_assignment/data/repository.dart';
-import 'package:dev_assignment/state/PostBloc.dart';
+import 'package:dev_assignment/state/postbloc.dart';
 import 'package:dev_assignment/state/postevent.dart';
 import 'package:dev_assignment/ui/homescreen.dart';
 import 'package:dev_assignment/ui/post_detail_screen.dart';

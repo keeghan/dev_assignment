@@ -11,8 +11,6 @@ Support for Android and IOS only.
 4. [Development Setup](#development-setup)
 5. [License](#license)
 
-- Pending Features : Searching.
-
 ## Screenshots
 
 <img src = "screenshots/homescreen.png" width = "220" height = "471"/> &nbsp; <img src = "screenshots/post_detail_screen.png" width = "220" height = "471"/>  &nbsp; <img src = "screenshots/homescreen_error.png" width = "220" height = "471"/>
@@ -35,18 +33,16 @@ Support for Android and IOS only.
 - Calls [jsonPlaceholder: posts](https://jsonplaceholder.typicode.com/posts) and displays it as a list.
 - Navigates to a second page with post details.
 - Cached data, providing offline support.
+- Post searching feature.
 
 ## Development Setup
 
-Make sure you have downloaded and set up Flutter and Android Studio correctly before you begin working on this project. Ensure that you have the Flutter SDK installed and the necessary Flutter dependencies are set up. Here is the official Flutter documentation to guide you through the installation and setup process:
+Make sure you have downloaded and set up Flutter and Android Studio correctly before you begin working on this project by following the official guide below.
 
 - [Flutter Installation](https://flutter.dev/docs/get-started/install)
-
-Additionally, ensure that Android Studio is configured with the Flutter and Dart plugins. This will allow you to develop, build, and test Flutter applications effectively. You can follow the guide below to set up Android Studio for Flutter:
-
 - [Android Studio Setup for Flutter](https://flutter.dev/docs/get-started/editor?tab=androidstudio)
 
-After you are done with the above, you can either download the codebase or import it using your IDE. Wait for it to download all dependencies, then you are ready to run the app.
+After you are done with the above, you can either download the codebase or import it using your IDE using the [github plugin](https://github.com/topics/plugin) for your preferred IDE. Wait for the project download all dependencies, then you are ready to run the app.
 
 ## License
 
